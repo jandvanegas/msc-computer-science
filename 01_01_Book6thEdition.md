@@ -23,7 +23,9 @@ When sending info from H1 to H2. The process follows:
 * At receiving H2 the network layer receives the datagrams from its nearby R2
 * Extracts the transport-layers segmennt
 * Delivers the segments up to the transport layer at H2
+
 ![](img/2022-02-06-12-15-28.png)
+
 #### Forwarding and Routing 
 * Forwarding: when a packet arrives at a router's input linke, the router move the packet to the appropriate output link. (Local action)
 * Routing: the network layer must determine the route taken by packets as they flow from a sender to a receiver. (network-wide process)
@@ -64,4 +66,8 @@ There are other models that offer better services:
 	* In order
 	* Congestion indication
 ### Virtual Circuit and Datagram Networks
+Similar to Transport layer's connection-oriented(TCP) and connectionless(UDP), in network layer we have connection and connectionless oriented services. Some differences are:
+* These services are host-to-host services provided by the networklayer for the transport layer.
+* Most of the architectures provided either connectionless(**datagram** networks) or connection services (**VC virtual-circuit** networks).
+* They have a different implementation. It is implemented in the routers.
 
