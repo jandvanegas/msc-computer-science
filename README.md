@@ -1,2 +1,2 @@
-# Computer Network Services and Technologies
+# MSc Computer Science @ Polito
 
