@@ -6,3 +6,5 @@
   * [Computer Networking A Top-Down Approach 6th Edition Notes](01\_01\_Book6thEdition.md)
 * [System and Device Programming](system-and-device-programming.md)
 * [Pattern Recognition and Machine Learning](pattern-recognition-and-machine-learning.md)
+    * [Book](prml/prml_book.md)
+
