@@ -82,6 +82,80 @@ This means: one instruction at a high level can generate many instructions at th
 
 ### What is an instruction set?
 
-* All the set of instructions that can be used to develop a program. Each machine has different sets.
+* All the set of instructions that can be used to develop a program.
+Each machine has different sets.
 
 > Date: 29-09-2021
+### 8086 Arch
+* It is important to know the hw architecture of the hardware you use.
+* Full control means full responsability.
+* 16 bits architecture -> size of the registers.
+* General purpose Registers A, B, C, D
+    * AX -> 16 bits
+    * AH, AL -> AH|AL
+* Registers
+  * Be used as pointers 
+    * SI, DI, BP, (BX) -> 16 bits
+  * Can be used as general and pointers, but do not used them 
+directly.
+    * SP -> Stack pointer
+    * IP -> Instruction pointer. Program Counter (PC)
+      * Notes 
+      * Next (In time domain)
+      * Following (in space domain)
+  * Segment 16 bits
+    * CS -> Code Segment
+    * SS -> Stack Segment
+    * DS -> Data Segment
+    * ES -> Extra Segment
+  * How to address 1M of instructions
+    * How many cells can be addres with the IP? 
+    * IP is 16 bits = 2^16 = 64K cells
+    * But we need 20 bits 2^20 = 1M
+    * However, we just need the Address bus to be 20 bits 
+    * We need 4 bits more.
+    * | 4 bits | IP |
+    * This was solved overlapping with CS registers like:
+    * | 0000 | 16 bits IP     | +  
+      | 16 bits CS     | 0000 |
+```
+| - - - - - - - - - - - - - - - - | 
+| Code                            | CS 2^16
+| - - - - - - - - - - - - - - - - | 
+|                                 | 
+| - - - - - - - - - - - - - - - - | 
+| Data                            | DS 2^16
+| - - - - - - - - - - - - - - - - | 
+|                                 | 
+| - - - - - - - - - - - - - - - - | 
+| Stack                           | CS 2^16
+| - - - - - - - - - - - - - - - - | 
+|                                 | 
+| - - - - - - - - - - - - - - - - | 
+|                                 | 
+| - - - - - - - - - - - - - - - - | 
+| Code 2                          | After The first part is full
+|                                 | Update CS and clear IP
+| - - - - - - - - - - - - - - - - | 
+```
+
+    * Bad indexing example: Assembler does not check if you bad index.
+    If you want a carrot but you index 3. Assembler does not tell you
+    that you're accessing a tomato. However if yo declare correctly
+    the compiler would check. An even worst case is if you index 5 and
+    you end up accessing code.
+```
+|                                 | 
+| - - - - - - - - - - - - - - - - | 
+| Data                            | 0 |_| Carrots 
+|                                 | 1 |_| Carrots 
+|                                 | 2 |_| Carrots 
+|                                 | 3 |_| Tomato 
+| - - - - - - - - - - - - - - - - | 
+| Code                            | 
+| - - - - - - - - - - - - - - - - | 
+|                                 | DS 2^16
+| - - - - - - - - - - - - - - - - | 
+```
+> Date: 30/09/2021
+
