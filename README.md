@@ -158,4 +158,124 @@ directly.
 | - - - - - - - - - - - - - - - - | 
 ```
 > Date: 30/09/2021
+1:09:17
+### Memory
+```
+|-----| 1230
+|-----| 1231
+|-----| 1232
+|-----|  |
+|-----|  Our convention increasing in this direction
+|-----|
+| 1 byte |
+```
+
+Let's say we want to move the content of AX (|AL|AH|) to the address 
+1234 `MOV @ 1232, AX`, but we have then a mismatch
+because 1232 address is just 8 byte long. However the compiler will
+consider 1232 as the first cell to be involved. Therefore, two cell
+actually would be involved. 
+There are two ways to store the register 
+Littler Endian (Lower at the lower address)
+```
+|AL| 1232
+|AH| 1233
+```
+or 
+Big Endian (Higher at the lower address)
+|AH| 1232
+|AL| 1233
+### Stack -> LIFO
+Last input, first output
+```
+_____
+|   |<Stack Segment> <-SP = 0
+|   |
+|   |
+|   |
+|   |
+|   |
+| x | 
+| x | 
+| x |
+| x | 
+| x | <-SP The stack has two values
+| x | 
+| x | 
+| x | 
+-----
+|   | <- SP when stack is empty
+```
+* Increase of the stack is opposite to the increase of address of memory
+* SP(Stack pointer) -> points to the top of the stack
+* Each element in an stack is 16 bits -> two cells
+* No allowed pushing constants
+* At the beginning when the stack is empty, SP is outside the Stack 
+  segment and has value the size of the SS plus one
+* When an item is added to the Stack, SP is reduced by two cells addres
+  in the stack.
+* When pushing to the stack `PUSH AX`, two things happen. `SUB SP, 2`
+  and `MOV [SP] AX`.
+* It is stored as little endian.
+```
+|    |
+| AL | 
+| AH | 
+-----
+```
+* SP should not be negative because that would mean the stack was 
+  overflowed.
+* Choose mindfully the size of the SS(Stack segment). You have limited 
+  area in 8086.
+
+> Date 01/10/2021
+### Instructions 8086
+<Label> : <Operator> <Operand(s)> ; <comment>
+```
+Addressing Modes
+Register | Direct
+Constant | Indirect
+------------------
+CPU      | Memory
+```
+```
+MOV dest, source ; copy from source to destination
+```
+* Operations needing two operands:
+  I cannot have two operands both in memory.
+CPU
+* Register -> Mov AX, BX
+* Constant -> MOV AX, 7
+(MOV 7, AX) -> Not valid
+
+Memory
+Direct
+* MOV AX,  @7 ; at address 7 
+
+Commands to compiler
+JOHN DW 101 ; Reserve 16 bits in the data segment
+              and store 101 in that address. JOHN will have the address
+              of this space. Therefore, the developer can use this 
+              variable to reference the reserved address.
+Symbol Table
+Used by the compiler, just on compilation. After that it is deleted.
+Meaning it is not used at runtime.
+NAME What?     Equivalence
+JOHN Word Data  <address>
+
+MOV AX, JOHN + 2 ; This will be replaced at compile time with
+MOV AX, <address> + 2
+
+Array definition
+N EQU 35 ; Constant definition
+JIM DB N DUP(?); DUP dupplication, N number of cells, ? random value.
+
+* Indirect
+```
+MOV JIM[ ], 0; in the space, you can use BX, BP, SI, DI
+MOV JIM[BX], 0 ; BX is a contribution to compute the final address of memory. 
+```
+1:35:19
+
+
 
