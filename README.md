@@ -276,6 +276,70 @@ MOV JIM[ ], 0; in the space, you can use BX, BP, SI, DI
 MOV JIM[BX], 0 ; BX is a contribution to compute the final address of memory. 
 ```
 1:35:19
+In a loop it would be
+```
+MOV JIM[BX], 0
 
+INC BX
+```
+* At compiler -> JIM is replaced with the real address
+* At runtime the real address is sum up with BX, and that is the 
+  destination where 0 is placed.
 
+* Be careful using the next way of addressing:
+```
+MOV JIM[BX][SI], 0; BX or BP, SI or DI
+;JIM[BX][SI] -> <JIM address> BX + SI -> this is the offset of 
+; the data segment
+; BP in the first square  accesses the stack segment
+```
+* The next operations are translated to different actions 
+  because the operands are different. In the first case for 
+  example the first is Register content to Register content,
+  in the second constant to Register content.
+```
+BOB DW ?
+MOV AX, BX ; Register to Register
+MOV AX, 2 ; Constant to Register
+MOV AX, BOB ; Content of the address to Register. BOB becomes hardcoded
+MOV AX, [BX] ; Content of the Address BX has to Register
+```
+* Data transfer
+```
+MOV dest, source
+MOV JOHN, JIM ; WRONG to have two memory cells
+MOV JOHN, 0 ; OK 0 is not in memory. It is part of the instruction
+```
+* Challenge
+```
+XCHG AX, BX; Let say we want this to swap values.
+
+;Not a good solution
+MOV CX, AX
+MOV AX, BX
+MOV BX, CX
+
+;A good solution
+PUSH CX
+MOV CX, AX
+MOV AX, BX
+MOV BX, CX
+POP CX
+
+;Another good solution, but slowest
+PUSH AX
+PUSH BX
+POP AX
+POP BX
+
+;Another good solution
+PUSH AX
+MOV BX, AX
+POP AX
+
+;The fastest
+XOR AX, BX
+XOR BX, AX
+XOR AX, BX
+```
 
