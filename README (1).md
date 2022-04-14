@@ -1,2 +1,0 @@
-# MSc Computer Science @ Polito
-
