@@ -10,4 +10,6 @@
     * [Unix Implementations and Standards](system-device-programming/unix.md)
 * [Pattern Recognition and Machine Learning](prml/pattern-recognition-and-machine-learning.md)
     * [Book](prml/prml_book.md)
+  * Labs
+    * [Lab 2](prml/labs/lab02.md)
 
