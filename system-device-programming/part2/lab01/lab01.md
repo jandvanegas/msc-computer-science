@@ -76,16 +76,15 @@ int main () {
   return (1);
 }
 ```
-![](img/2022-03-17-13-21-47.png)
+![Solution](img/2022-04-16-11-26-30.png)
 It would print  
-* 0
-  * 0=0
-    * 1
-      * 1=1
-  * 1
-    * 1=1
-  * 1
-    * 1=1
+* i=0
+  * i=i; i=i
+    * i=i
+  * i=1
+    * i=i
+  * i=1
+    * i=i
 
 Exercise 03
 Code analysis: fork, exec, system
