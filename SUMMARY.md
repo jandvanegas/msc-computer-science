@@ -12,4 +12,5 @@
     * [Book](prml/prml_book.md)
   * Labs
     * [Lab 2](prml/labs/lab02.md)
+    * [Lab 3](prml/labs/lab03.md)
 

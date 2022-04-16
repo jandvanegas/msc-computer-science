@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+from .prml import load, vcol
+
 
 def load_iris():
     values, targets = load('iris.csv')
@@ -10,20 +12,6 @@ def load_iris():
           'Petal width'])
     plot(values, targets, ['Sepal length', 'Sepal width', 'Petal length',
                            'Petal width'])
-
-
-def load(file_name: str):
-    array = []
-    targets = []
-    with open(file_name, 'r') as file:
-        for raw_line in file:
-            if raw_line:
-                line = raw_line.split(',')
-                raw_values, target = line[:-1], line[-1]
-                values = [float(value) for value in raw_values]
-                array.append(values)
-                targets.append(target.strip())
-    return np.array(array).T, np.array(targets)
 
 
 def simple_plot(values: np.ndarray, classes: list, feature_names: list = None):
@@ -79,15 +67,7 @@ def plot(values: np.ndarray, classes: np.ndarray,
 
 
 def center_values(values: np.ndarray):
-    return values - mcol(values.mean(1))
-
-
-def mcol(vector: np.ndarray):
-    return vector.reshape((vector.shape[0], 1))
-
-
-def mrow(vector: np.ndarray):
-    return vector.reshape((1, vector.shape[0]))
+    return values - vcol(values.mean(1))
 
 
 if __name__ == '__main__':
