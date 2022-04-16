@@ -8,6 +8,11 @@
   * [Computer Networking A Top-Down Approach 6th Edition Notes](computer-network-technologies/01\_01\_Book6thEdition.md)
 * [System and Device Programming](system-device-programming/system-and-device-programming.md)
     * [Unix Implementations and Standards](system-device-programming/unix.md)
+    * First Part
+      * Labs
+    * Second Part
+      * Labs
+        * [Lab 01](system-device-programming/part2/lab01/lab01.md)
 * [Pattern Recognition and Machine Learning](prml/pattern-recognition-and-machine-learning.md)
     * [Book](prml/prml_book.md)
   * Labs
