@@ -15,6 +15,7 @@ int main(int argc, char **argv) {
 			if (!child_id) {
 				break;
 			} 
+			printf("Level %d: %d generated %d\n", level, getpid(), child_id);
 		}
 		if (child_id) exit(0);
 	}
