@@ -117,7 +117,7 @@ int main () {
 }
 ```
 
-![](img/2022-03-17-13-38-18.png)
+![Solution](img/2022-04-16-11-35-35.png)
 
 Exercise 04
 Code implementation with processes
