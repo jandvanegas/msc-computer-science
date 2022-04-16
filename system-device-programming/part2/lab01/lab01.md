@@ -35,22 +35,23 @@ int main(){
   return (0);
 } 
 ```
-![Solution](img/2022-03-17-13-10-14.png)
+![Solution](img/2022-04-16-11-12-31.png)
 
 It would print:
 * case 2 
   * case 3
   * case 3
-* case 2 
+* <None> 
   * case 3
   * case 3
+
 e.g.  
 case 2    
-case 2  
 case 3  
 case 3  
 case 3  
 case 3  
+
 Exercise 02
 
 Code analysis: fork, exec, system
