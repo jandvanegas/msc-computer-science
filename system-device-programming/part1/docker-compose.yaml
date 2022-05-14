@@ -1,0 +1,20 @@
+version: '3'
+services:
+  os161:
+    image: "os161"
+    container_name: "os161"
+    build: .
+    command:
+      - /bin/bash
+    volumes:
+      - polito-os161-vol:/home/os161user
+  html:
+    image: httpd:2.4
+    ports:
+      - "8078:80"
+    volumes:
+      - polito-os161-vol:/usr/local/apache2/htdocs/
+
+volumes:
+    polito-os161-vol:
+        external: false

@@ -1,6 +1,6 @@
 # Lab 2
 The lab consists on loading and plotting iris.csv file.
-Solution was implemented using spyder for the interation and pycharm
+Solution was implemented using spyder for the interaction and pycharm
 for the software development.
 Some learning about spyder are:
 * Spyder allow you to set up PYTHONPATH.

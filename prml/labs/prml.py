@@ -1,4 +1,6 @@
 import numpy as np
+import scipy
+import scipy.linalg
 
 
 def vcol(vector: np.ndarray):
@@ -21,7 +23,7 @@ def vrow(vector: np.ndarray):
 
 def load(file_name: str):
     """
-    Return two np.ndarray objects with data and targe values
+    Return two np.ndarray objects with data and target values
     File must be in the format
     float, float, float, ..., str
     Having first values as integers/float for the features and last value as
@@ -63,6 +65,48 @@ def covariance(matrix_d):
     return data_centered @ data_centered.T / N
 
 
+def covariance_between(matrix_d, matrix_l):
+    """
+    Return covariance between classes
+    :param matrix_d: features x N
+    :param matrix_l: classes vector
+    :return: covariance matrix features x features
+    """
+    classes = set(matrix_l)
+    features = matrix_d.shape[0]
+    N = matrix_d.shape[1]
+    s_b = np.zeros((features, features))
+    mu = mean(matrix_d)
+    for class_l in classes:
+        d_class = matrix_d[:, matrix_l == class_l]
+        nc = d_class.shape[1]
+        mu_c = mean(d_class)
+        classes_distance = mu_c - mu
+        summation = np.multiply(nc, classes_distance) @ classes_distance.T
+        s_b = s_b + summation
+    return s_b / N
+
+
+def covariance_within(matrix_d, matrix_l):
+    classes = set(matrix_l)
+    N = matrix_d.shape[1]
+    features = matrix_d.shape[0]
+    s_w = np.zeros((features, features))
+    for class_l in classes:
+        d_class = matrix_d[:, matrix_l == class_l]
+        mu_c = mean(d_class)
+        central_data = d_class - mu_c
+        class_summation = central_data @ central_data.T
+        s_w = s_w + class_summation
+    return s_w / N
+
+
+def compute_w(s_b, s_w, m):
+    s, U = scipy.linalg.eigh(s_b, s_w)
+    W = U[:, ::-1][:, 0:m]
+    return W
+
+
 def eigh(matrix_d):
     """
     Return eigen values and vectors using np. linalg.eigh but in desc order
@@ -71,3 +115,35 @@ def eigh(matrix_d):
     """
     eig_values, eig_vectors = np.linalg.eigh(matrix_d)
     return eig_values[::-1], eig_vectors[:, ::-1]
+
+
+def compute_pca(matrix_d, m):
+    """
+    Computes the Principal component Analysis of a Matrix
+    :param matrix_d: (np.ndarray features, N) matrix
+    :param m: number of components
+    :return: Data projected over the m principal components
+    """
+    d_covariance = covariance(matrix_d)
+    eig_values, eig_vectors = eigh(d_covariance)
+    P = eig_vectors[:, 0:m]  # Eigen vectors to project
+    DP = P.T @ matrix_d  # Matrix D projected on P
+    return DP
+
+
+def compute_w_2(s_b, s_w, m):
+    U, s, _ = np.linalg.svd(s_w)
+    P1 = np.dot(U * vrow(1.0 / (s ** 0.5)), U.T)
+    Sbt = P1 @ s_b @ P1.T
+    _, P2 = eigh(Sbt)
+    P2 = P2[:, 0:m]
+    W = P1.T @ P2
+    return W
+
+
+def compute_lda(matrix_d, targets, m):
+    S_b = covariance_between(matrix_d, targets)
+    S_w = covariance_within(matrix_d, targets)
+    W = compute_w_2(S_b, S_w, m)
+    DP = W.T @ matrix_d
+    return DP
