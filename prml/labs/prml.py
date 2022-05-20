@@ -1,3 +1,5 @@
+import math
+
 import numpy as np
 import scipy
 import scipy.linalg
@@ -147,3 +149,26 @@ def compute_lda(matrix_d, targets, m):
     W = compute_w_2(S_b, S_w, m)
     DP = W.T @ matrix_d
     return DP
+
+
+def logpdf_GAU_ND(X, mu, C):
+    """
+    Computes the Multivariate Gaussian Density
+
+    :param X: matrix features x samples
+    :param mu: mean
+    :param C: empirical covariance
+    :return:
+    """
+    M = X.shape[0]
+    first_term = - 0.5 * M * np.log(2 * math.pi)
+    centered_x = X - mu
+    second_term = - 0.5 * np.linalg.slogdet(C)[1]
+    third_term = - 0.5 * np.sum(
+        (centered_x.T @ np.linalg.inv(C)) * centered_x.T,
+        axis=1)
+    return first_term + second_term + third_term
+
+
+def loglikelihood(X, m, C):
+    return logpdf_GAU_ND(X, m, C).sum(axis=0)
