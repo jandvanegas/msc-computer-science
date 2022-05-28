@@ -24,5 +24,6 @@ def main():
     plt.plot(XPlot.ravel(), np.exp(prml.logpdf_GAU_ND(prml.vrow(XPlot), m, C)))
     plt.show()
 
+
 if __name__ == '__main__':
     main()
