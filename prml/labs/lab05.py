@@ -43,11 +43,11 @@ def compute_classifier_covariance(covariance, classifier, D, L):
         return covariance
     elif classifier == 'naive':
         return diagonalize_covariance(covariance)
-    elif classifier == 'tied':
-        return [prml.covariance_within(D, L) for _ in range(3)]
+    elif classifier == 'tied_gaussian':
+        covariance = prml.covariance_within(D, L)
+        return [covariance for _ in range(3)]
     elif classifier == 'tied_naive':
-        # TODO validate this
-        covariance = prml.covariance(D)
+        covariance = prml.covariance_within(D, L)
         return diagonalize_covariance([covariance for _ in range(3)])
 
 
