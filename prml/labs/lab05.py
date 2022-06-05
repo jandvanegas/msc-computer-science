@@ -24,7 +24,7 @@ def main():
 
 def training_50_50(classifier):
     D, L = load_iris()
-    (DTR, LTR), (DTE, LTE) = split_db_2to1(D, L)
+    (DTR, LTR), (DTE, LTE) = prml.split_data(D, L, 2.0 / 3.0)
     mean, covariance = compute_classifier(DTR, LTR, classifier=classifier)
     return evaluate(DTE, LTE, mean, covariance, logarithmically=False)
 
@@ -131,19 +131,6 @@ def split_by_classes(data, labels):
         classes.append(data[:, labels == _class])
     return classes
 
-
-def split_db_2to1(D: np.ndarray, L: np.ndarray, seed=0):
-    nTrain = int(D.shape[1] * 2.0 / 3.0)
-    np.random.seed(seed)
-    idx = np.random.permutation(D.shape[1])
-    idxTrain = idx[0:nTrain]
-    idxTest = idx[nTrain:]
-
-    DTR = D[:, idxTrain]
-    DTE = D[:, idxTest]
-    LTR = L[idxTrain]
-    LTE = L[idxTest]
-    return (DTR, LTR), (DTE, LTE)
 
 
 if __name__ == '__main__':
