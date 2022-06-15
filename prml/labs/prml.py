@@ -186,3 +186,36 @@ def split_data(D: np.ndarray, L: np.ndarray, proportion, seed=0):
     LTR = L[idxTrain]
     LTE = L[idxTest]
     return (DTR, LTR), (DTE, LTE)
+
+
+def optimal_bayes(ll_ratio, L, prior, Cfn, Cfp, threshold=None):
+    """
+    Computes optimal bayes decision
+    :param ll_ratio: loglikelihood ratio
+    :param L: real labels
+    :param prior: pi value of prior probability
+    :param Cfn: cost of false negatives
+    :param Cfp: cost of false positives
+    :param threshold: [optional] decision bayes threshold
+    :return:
+    """
+    if threshold is None:
+        threshold = - np.log((prior * Cfn) / ((1 - prior) * Cfp))
+    prediction = ll_ratio > threshold
+    confusion = compute_confusion_matrix(np.unique(L), L, prediction)
+    TP = confusion[1, 1]
+    TN = confusion[0, 0]
+    FN = confusion[0, 1]
+    FP = confusion[1, 0]
+    FPR = FP / (FP + TN)
+    FNR = FN / (FN + TP)
+    return prediction, FPR, FNR, confusion
+
+
+def compute_confusion_matrix(labels, L_real, L_predicted):
+    confusion = np.zeros((len(labels), len(labels)))
+    for column in labels:
+        current = L_predicted[L_real == column]
+        for row in labels:
+            confusion[row, column] = np.count_nonzero(current == row)
+    return confusion
