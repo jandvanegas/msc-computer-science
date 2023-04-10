@@ -1,10 +1,14 @@
 # Lab 2
+
+## Explanation
+
 The lab consists on loading and plotting iris.csv file.
 Solution was implemented using spyder for the interaction and pycharm
 for the software development.
 Some learning about spyder are:
-* Spyder allow you to set up PYTHONPATH.
-* Create a module, so that you can import it from spyder.
+
+- Spyders allow you to set up PYTHONPATH.
+- Create a module, so that you can import it from spyder.
 
 ```python
 import numpy as np
@@ -102,5 +106,3 @@ def mrow(vector: np.ndarray):
 if __name__ == '__main__':
     load_iris()
 ```
-
-
