@@ -9,7 +9,10 @@
       "type": "python",
       "request": "launch",
       "module": "labs.lab02",
-      "justMyCode": true
+      "justMyCode": true,
+      "env": {
+        "DATA_PATH": "./data"
+      }
     },
     {
       "name": "Lab03",
@@ -18,7 +21,17 @@
       "module": "labs.lab03",
       "justMyCode": true,
       "env": {
-        "DATA_PATH": "./labs/data"
+        "DATA_PATH": "./data"
+      }
+    },
+    {
+      "name": "Lab04",
+      "type": "python",
+      "request": "launch",
+      "module": "labs.lab04",
+      "justMyCode": true,
+      "env": {
+        "DATA_PATH": "./data"
       }
     }
   ]

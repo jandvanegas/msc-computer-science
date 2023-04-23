@@ -1,19 +1,16 @@
 """Lab 2."""
-import numpy as np
 import os
-import matplotlib.pyplot as plt
 
-from .prml import load, vcol, vrow
+import matplotlib.pyplot as plt
+import numpy as np
+
+from prml.prml import load, vcol, vrow
 
 
 def load_iris():
     """Load the iris dataset and plot it."""
-    X, Y = load(
-        os.path.join(
-            os.path.dirname(__file__),
-            "./iris.csv",
-        )
-    )
+    data_dir = os.environ["DATA_PATH"]
+    X, Y = load( os.path.join(data_dir, "lab02/iris.csv"),)
     X_bar = center_matrix(X, axis=1)
     plot(
         X_bar,

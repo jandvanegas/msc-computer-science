@@ -2,7 +2,7 @@ import numpy as np
 import scipy.optimize
 import sklearn.datasets
 
-import prml
+import src.prml.prml as prml
 
 
 def main():

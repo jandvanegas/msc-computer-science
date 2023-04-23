@@ -1,11 +1,14 @@
 import math
+import os
+
+import matplotlib.pyplot as plt
 import numpy as np
 
-import prml
+from prml import prml
 
 
 def main():
-    import matplotlib.pyplot as plt
+    data_path = os.environ["DATA_PATH"]
     plt.figure()
     XPlot = np.linspace(-8, 12, 1000)
     m = np.ones((1, 1)) * 1.0
@@ -14,7 +17,7 @@ def main():
     plt.plot(XPlot.ravel(), np.exp(result))
     plt.show()
 
-    XND1 = np.load('./lab04/X1D.npy')
+    XND1 = np.load(os.path.join(data_path, './lab04/X1D.npy'))
     m = prml.mean(XND1)
     C = prml.covariance(XND1)
 

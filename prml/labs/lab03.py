@@ -1,5 +1,5 @@
 """Lab 03: Principal Component Analysis and Linear Discriminant Analysis."""
-from . import prml
+from prml import prml
 import matplotlib.pyplot as plt
 import os
 
@@ -7,7 +7,7 @@ import os
 def main():
     """Run main function."""
     data_path = os.environ["DATA_PATH"]
-    X, Y = prml.load(os.path.join(data_path, "iris.csv"))
+    X, Y = prml.load(os.path.join(data_path, "lab03/iris.csv"))
     DP_pca = prml.compute_pca(X, m=2)
     DP_lda = prml.compute_lda(X, Y, m=2)
     scatter_2_classes(DP_pca, Y)

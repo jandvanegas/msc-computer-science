@@ -1,20 +1,21 @@
+import os
 import numpy as np
-import prml
+from prml import prml
 import matplotlib.pyplot as plt
 
 
 def test_logpdf_GAU_ND():
-    XND = np.load('./XND.npy')
-    mu = np.load('./muND.npy')
-    C = np.load('./CND.npy')
-    pdfSol = np.load('./llND.npy')
+    XND = np.load('data/lab04/XND.npy')
+    mu = np.load('data/lab04/muND.npy')
+    C = np.load('data/lab04/CND.npy')
+    pdfSol = np.load('data/lab04/llND.npy')
     pdfGau = prml.logpdf_GAU_ND(XND, mu, C)
     assert np.abs(pdfSol - pdfGau).max() == 0.0
 
     XPlot = np.linspace(-8, 12, 1000)
     m = np.ones((1, 1)) * 1.0
     C = np.ones((1, 1)) * 2.0
-    pdfSol = np.load('./llGAU.npy')
+    pdfSol = np.load('data/lab04/llGAU.npy')
     pdfGau = prml.logpdf_GAU_ND(prml.vrow(XPlot), m, C)
     assert np.abs(pdfSol - pdfGau).max() == 0.0
 
@@ -26,7 +27,7 @@ def test_mean_x_input():
             [0.94590166, 0.09313534],
             [0.09313534, 0.8229693]
         ])
-    XND = np.load('./XND.npy')
+    XND = np.load('data/lab04/XND.npy')
 
     mean = prml.mean(XND)
     empirical_covariance = prml.covariance(XND)
@@ -37,7 +38,7 @@ def test_mean_x_input():
     ll = prml.loglikelihood(XND, mean, empirical_covariance)
     assert abs(-270.70478023795044 - ll) < 0.00001
 
-    XND1 = np.load('./X1D.npy')
+    XND1 = np.load('data/lab04/X1D.npy')
     m = prml.mean(XND1)
     assert (m - np.array([1.9539157])) < 0.000001
     C = prml.covariance(XND1)

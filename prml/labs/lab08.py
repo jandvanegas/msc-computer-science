@@ -1,7 +1,7 @@
 import numpy as np
 import scipy.special
 
-import prml
+import src.prml.prml as prml
 import matplotlib.pyplot as plt
 
 

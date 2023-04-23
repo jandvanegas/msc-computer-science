@@ -3,7 +3,7 @@ import sklearn.datasets
 from scipy.optimize import fmin_l_bfgs_b
 import numpy.linalg
 
-import prml
+import src.prml.prml as prml
 
 
 def main():
